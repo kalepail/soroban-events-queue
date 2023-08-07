@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "main": "worker.ts",
+  "scripts": {
+    "start": "export NO_D1_WARNING=true && wrangler dev --port 8787 --test-scheduled",
+    "deploy": "export NO_D1_WARNING=true && wrangler deploy"
+  },
+  "dependencies": {
+    "soroban-client": "^0.10.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230801.0",
+    "typescript": "^5.1.6",
+    "wrangler": "^3.4.0"
+  }
+}

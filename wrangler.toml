@@ -1,0 +1,42 @@
+name = "soroban-events-queue"
+usage_model = "bundled"
+main = "worker.ts"
+compatibility_date = "2023-08-01"
+compatibility_flags = [
+    "durable_object_alarms",
+    "durable_object_fetch_allows_relative_url",
+]
+logpush = true
+send_metrics = true
+workers_dev = true
+
+# kv_namespaces = [
+#   { binding = "INFO", id = "fb7497e621a843f29f97aeae6824f0a3", preview_id = "0x000000000000000000000000000000" }
+# ]
+
+[[d1_databases]]
+binding = "EVENTS"
+database_name = "soroban-events"
+database_id = "111808a1-cd2d-4b19-ac8c-cdab3660efa3"
+
+[[queues.producers]]
+queue = "event-listener"
+binding = "QUEUE"
+
+[[queues.consumers]]
+queue = "event-listener"
+max_batch_size = 10
+max_batch_timeout = 5
+max_retries = 5
+# max_concurrency = 1
+
+[triggers]
+crons = ["* * * * *"]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["EventPoll"]
+
+[[durable_objects.bindings]]
+name = "EVENTPOLL"
+class_name = "EventPoll"
