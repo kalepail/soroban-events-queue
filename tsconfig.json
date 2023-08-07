@@ -11,6 +11,7 @@
     "noEmit": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-  }
+    "strict": true
+  },
+  "include": ["src"]
 }

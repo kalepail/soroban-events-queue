@@ -1,6 +1,6 @@
 {
   "private": true,
-  "main": "worker.ts",
+  "main": "src/worker.ts",
   "scripts": {
     "start": "export NO_D1_WARNING=true && wrangler dev --port 8787 --test-scheduled",
     "deploy": "export NO_D1_WARNING=true && wrangler deploy"
