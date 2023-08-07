@@ -24,6 +24,7 @@ export class EventPoll implements DurableObject {
     async fetch(request: Request) {
         const url = new URL(request.url)
 
+        // Websocket requests
         if (url.pathname.includes('ws')) {
             const { 0: client, 1: server } = new WebSocketPair() // new WebSocket(url.toString())
             this.state.acceptWebSocket(server)
@@ -34,13 +35,19 @@ export class EventPoll implements DurableObject {
             });
         }
 
+        // Reset event ingestion
         else if (url.pathname.includes('reset')) {
-            await this.storage.deleteAlarm()
-            await this.storage.deleteAll()
-            this.cursor = undefined
-            this.alarm_running = false
+            const { code }: { code: string } = await request.json()
+
+            if (code === this.env.RESET_CODE) {
+                await this.storage.deleteAlarm()
+                await this.storage.deleteAll()
+                this.cursor = undefined
+                this.alarm_running = false
+            }
         }
 
+        // Normal process (e.g. cron event)
         else if (
             !this.alarm_running
             && await this.storage.getAlarm() === null

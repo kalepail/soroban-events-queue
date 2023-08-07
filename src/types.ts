@@ -6,6 +6,7 @@ export type Env = {
     readonly QUEUE: Queue<SorobanRpc.EventResponse>
     readonly EVENTPOLL: DurableObjectNamespace
     readonly ERROR_BUCKET: R2Bucket
+    readonly RESET_CODE: string
 }
 
 export type getLatestLedgerResponse = {
